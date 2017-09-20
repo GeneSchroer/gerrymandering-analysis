@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -13,6 +12,7 @@
         require(["dojo/parser", "dijit/layout/BorderContainer", "dijit/layout/TabContainer",
             "dijit/layout/AccordionContainer","dijit/layout/ContentPane", "dojo/domReady!"]);
     </script>
+
     <style>
         html, body{
             width: 100%;
@@ -20,10 +20,18 @@
             overflow: hidden;
         }
     </style>
+    
+    <style>
+    		#map{
+    			height: 250px;
+    			width: 400px;
+    		}
+    </style>
       
 </head>
 
 <body class="claro">
+
     <div data-dojo-type="dijit/layout/BorderContainer" style="width:100%; height:100%">
         <div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:50%;">
             <div data-dojo-type="dijit/layout/ContentPane" title="Data #1">Data could go here</div>
@@ -31,11 +39,27 @@
             <div data-dojo-type="dijit/layout/ContentPane" title="Data #3">Even more data</div>
         </div>
         <div data-dojo-type="dijit/layout/TabContainer" data-dojo-props="region:'center', splitter:true" style="width:30%;">
-            <div data-dojo-type="dijit/layout/ContentPane" title="Gerrrymandering">Map of gerrymandered districts goes here</div>
+            <div data-dojo-type="dijit/layout/ContentPane" title="Gerrrymandering">
+            		<h3>Gerrymandering Map</h3>
+            		<div id="map"></div>
+					<script>
+						function initMap(){
+							var us = {lat:42.878, lng: -97.381};
+							var map = new google.maps.Map(document.getElementById('map'), {zoom: 3, center: us});
+							var marker = new google.maps.Marker({
+								position: us,
+								map: map
+							});
+						}
+					</script>
+	
+					<script async defer
+    						src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhrLORSioOAG8J5SkvyiT7alO7s2lcOHo&callback=initMap">
+    					</script>
+            </div>
             <div data-dojo-type="dijit/layout/ContentPane" title="Redistricting">Map of superdistricts goes here</div>
         </div>
         <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'bottom', splitter:true" style="height:30%;">Put something here. Maybe the team members' names</div>
-
     </div>
 </body>
 
