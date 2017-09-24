@@ -5,21 +5,25 @@
     <!-- Web GUI by Sung Jae Min and Gene Schroer -->
     <title>Gerrymandering Analysis Program</title>
             <meta charset="UTF-8">
-    <script>dojoConfig = { parseOnLoad: true }</script>
+    <script>dojoConfig = { async: true}</script>
     <script src="//ajax.googleapis.com/ajax/libs/dojo/1.12.1/dojo/dojo.js"></script>
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.12.1/dijit/themes/claro/claro.css">
 	
+	
+    
 	<script>
-        require(["dojo/parser", "dijit/layout/BorderContainer", "dijit/layout/TabContainer",
-            "dijit/layout/AccordionContainer","dijit/layout/ContentPane", "dojo/domReady!"]);
-    </script>
-    <script>
+		
+    	
+        
+    		
+    	
+   
 						function initMap(){
 							var us = {lat:39.878, lng: -97.381};
-							var map = new google.maps.Map(dojo.byId('redistrictingMap'), {
+							var map = new google.maps.Map(document.getElementById('redistrictingMap'), {
 								zoom: 3, 
 								center: us});
-							var map1 = new google.maps.Map(dojo.byId('gerrymanderingMap'), {
+							var map1 = new google.maps.Map(document.getElementById('gerrymanderingMap'), {
 								zoom: 3, 
 								center: us});
 						}
@@ -29,51 +33,109 @@
     					</script>
 	
     <style>
-    		#map{
+    		.googleMap{
     			height: 400px;
     			width: 400px;
-
+				
     		}
     		
         html, body{
             width: 100%;
             height: 100%;
+            margin: 0;
             overflow: hidden;
+            padding: 0;
         }
- 
+        .pageOverlay{
+        	top:0;
+        	left:0;
+        	position: absolute;
+        	height: 100%;
+        	width: 100%;
+        	z-index: 1001;
+        	display: block;
+        }
+        #loadingOverlay{
+        	background: #fff url('//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dijit/themes/claro/images/loadingAnimation.gif') no-repeat 10px 23px ;
+        }
+        
+        .loadingMessage{
+        	padding: 25px 40px;
+        	color: #999;
+        }
+        
+ 		
     </style>
       
 </head>
 
 <body class="claro">
-	<div data-dojo-type="dijit/layout/TabContainer" style="height:100%;">
-		<div data-dojo-type="dijit/layout/BorderContainer" title="Gerrymandering">
-			<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:50%">
-				<div data-dojo-type="dijit/layout/ContentPane" title="Data #1">Data could go here</div>
-	        	<div data-dojo-type="dijit/layout/ContentPane" title="Data #2">More data here</div>
-	        	<div data-dojo-type="dijit/layout/ContentPane" title="Data #3">Even more data</div>
-			</div>
-			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center', splitter:true" id="gerrymanderingMapPane">
-				<!--   <h3> Map </h3> -->
-            		<div id="gerrymanderingMap"style="height:100%;width:100%;"></div>
-					
-			</div>
-	
-		</div>
-		<div data-dojo-type="dijit/layout/BorderContainer" title="Redistricting">
+	<div id="loadingOverlay" class="loadingMessage pageOverlay"></div>
+		<div data-dojo-type="dijit/layout/TabContainer" style="height:100%;" >
+			<div data-dojo-type="dijit/layout/BorderContainer" title="Gerrymandering">
+				<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:50%">
+					<div data-dojo-type="dijit/layout/ContentPane" title="Data #1">Data could go here</div>
+		        	<div data-dojo-type="dijit/layout/ContentPane" title="Data #2">More data here</div>
+		        	<div data-dojo-type="dijit/layout/ContentPane" title="Data #3">Even more data</div>
+				</div>
+				<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'" id="gerrymanderingMapPane">
+					<!--   <h3> Map </h3> -->
+	            		<div id="gerrymanderingMap" class="googleMap" style="height:100%;width:100%;"></div>
+						
+				</div>
 		
-			<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:50%">
-				<div data-dojo-type="dijit/layout/ContentPane" title="Data #1">Data could go here</div>
-	        	<div data-dojo-type="dijit/layout/ContentPane" title="Data #2">More data here</div>
-	        	<div data-dojo-type="dijit/layout/ContentPane" title="Data #3">Even more data</div>
 			</div>
-			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center', splitter:true" id="redistrictingMapPane">
-				<div id="redistrictingMap" style="height:100%;width:100%;"></div>
-					
+			<div data-dojo-type="dijit/layout/BorderContainer" title="Redistricting">
 			
+				<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:50%">
+					<div data-dojo-type="dijit/layout/ContentPane" title="Data #1">Data could go here</div>
+		        	<div data-dojo-type="dijit/layout/ContentPane" title="Data #2">More data here</div>
+		        	<div data-dojo-type="dijit/layout/ContentPane" title="Data #3">Even more data</div>
+				</div>
+				<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'" id="redistrictingMapPane">
+					<div id="redistrictingMap" class="googleMap" style="height:100%;width:100%;"></div>
+						
+				
+				</div>
 			</div>
 		</div>
-	</div>
+		<script>
+		var demo;
+		
+		//require("dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer", "dijit/layout/")
+    	
+    	require(["dojo/_base/declare", "dojo/dom", "dojo/dom-style","dojo/_base/fx"],
+    			function(declare, dom, domStyle, fx){
+    		var x = dom.byId("loadingOverlay");
+    		console.log(x);
+    		var Demo = declare(null, {
+    			overlayNode: null,
+    			constructor: function(){
+    				//save a reference to the overlay
+    				console.log("This worked");
+    				this.overlayNode = dom.byId("loadingOverlay");
+    				console.log(this.overlayNode);
+    			},
+    			endLoading: function(){
+    				// fade the overlay gracefully
+    				fx.fadeOut({
+    					node: this.overlayNode,
+    					onEnd: function(node){
+    						domStyle.set(node, 'display', 'none');
+    					}
+    				}).play();
+    			}
+    		});
+    		demo = new Demo();
+    		// layout is ready, hide the loading overlay
+
+    	});
+    	require(["dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer", "dijit/layout/TabContainer", 
+    		"dijit/layout/AccordionContainer"], function(parser){
+    		parser.parse();
+    		demo.endLoading();
+    	});
+		</script>
 </body>
 
 </html>
