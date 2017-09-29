@@ -7,19 +7,22 @@
     <title>Gerrymandering Analysis Program </title>
     	<meta charset="UTF-8">
     	
+    	
+    	
+    	
+    	
     	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 	
 	
 	
-	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.12.1/dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="./dijit/themes/nihilo/nihilo.css">
 	<link rel="stylesheet" type="text/css" href="./css/style.css"/>
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-
     <!-- Load Esri Leaflet from source-->
     <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.3/esri-leaflet.js"></script>
     
     <!--load dojo-->
-	<script src="//ajax.googleapis.com/ajax/libs/dojo/1.12.1/dojo/dojo.js"></script>
+	<script src="dojo/dojo.js" data-dojo-config="async:true" ></script>
 
     	<style>
        
@@ -39,15 +42,25 @@
         
         
         #loadingOverlay{
-        	background: #fff url('//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dijit/themes/claro/images/loadingAnimation.gif') no-repeat 10px 23px ;
+        	background: #fff url('./dijit/themes/claro/images/progressBarAnim.gif') no-repeat 10px 23px ;
         }
         
         
     </style>
+    <script>
+		
+    		require(["javascript/LoadingScreen","dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer", "dijit/layout/TabContainer", 
+    		"dijit/layout/AccordionContainer"], function(LoadingScreen, parser){
+    			var loadingScreen = new LoadingScreen("loadingOverlay");	
+    			parser.parse();
+    			loadingScreen.endLoading();
+    		});
+    	
+	</script>
 </head>
-<body class ="claro">
+<body class ="claro tundra nihilo soria">
 
-	<div id="loadingOverlay" class="loadingMessage pageOverlay"></div>
+	<div id="loadingOverlay" class="loadingMessage pageOverlay">Loading</div>
 	<div data-dojo-type="dijit/layout/TabContainer" style="height:100%;" > 
 		<div data-dojo-type="dijit/layout/BorderContainer" title="Gerrymandering">
 			<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:40%">
@@ -70,41 +83,7 @@
 		</div>
 	</div>
 	
-	<script>
-		var demo;
-		require(["dojo/_base/declare", "dojo/dom", "dojo/dom-style","dojo/_base/fx"],
-    		function(declare, dom, domStyle, fx){
-    			var x = dom.byId("loadingOverlay");
-    			console.log(x);
-    			var Demo = declare(null, {
-    				overlayNode: null,
-    				constructor: function(){
-    				//save a reference to the overlay
-    					console.log("This worked");
-    					this.overlayNode = dom.byId("loadingOverlay");
-    					console.log(this.overlayNode);
-    				},
-    				endLoading: function(){
-    				// fade the overlay gracefully
-    					fx.fadeOut({
-    						node: this.overlayNode,
-    						onEnd: function(node){
-    						domStyle.set(node, 'display', 'none');
-    						}
-    					}).play();
-    				}
-    			});
-    			demo = new Demo();
-    		// layout is ready, hide the loading overlay
-    		});
-		
-    		require(["dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer", "dijit/layout/TabContainer", 
-    		"dijit/layout/AccordionContainer"], function(parser){
-    		parser.parse();
-    		demo.endLoading();
-    		});
-    	
-	</script>
+	
 	<script>
 	
 	var statesData = {"type":"FeatureCollection","features":[
