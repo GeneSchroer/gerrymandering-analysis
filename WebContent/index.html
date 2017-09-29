@@ -7,19 +7,21 @@
     <title>Gerrymandering Analysis Program </title>
     	<meta charset="UTF-8">
     	
+    	
+    	
+    	
+    	
     	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-	
-	
-	
-	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.12.1/dijit/themes/claro/claro.css">
+
+	<link rel="stylesheet" href="./dijit/themes/nihilo/nihilo.css">
+
 	<link rel="stylesheet" type="text/css" href="./css/style.css"/>
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-
     <!-- Load Esri Leaflet from source-->
     <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.3/esri-leaflet.js"></script>
     
     <!--load dojo-->
-	<script src="//ajax.googleapis.com/ajax/libs/dojo/1.12.1/dojo/dojo.js"></script>
+	<script src="dojo/dojo.js" data-dojo-config="async:true" ></script>
 
     	<style>
        
@@ -39,15 +41,25 @@
         
         
         #loadingOverlay{
-        	background: #fff url('//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dijit/themes/claro/images/loadingAnimation.gif') no-repeat 10px 23px ;
+        	background: #fff url('./dijit/themes/claro/images/progressBarAnim.gif') no-repeat 10px 23px ;
         }
         
         
     </style>
+    <script>
+		
+    		require(["javascript/LoadingScreen","dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer", "dijit/layout/TabContainer", 
+    		"dijit/layout/AccordionContainer"], function(LoadingScreen, parser){
+    			var loadingScreen = new LoadingScreen("loadingOverlay");	
+    			parser.parse();
+    			loadingScreen.endLoading();
+    		});
+    	
+	</script>
 </head>
-<body class ="claro">
+<body class ="claro tundra nihilo soria">
 
-	<div id="loadingOverlay" class="loadingMessage pageOverlay"></div>
+	<div id="loadingOverlay" class="loadingMessage pageOverlay">Loading</div>
 	<div data-dojo-type="dijit/layout/TabContainer" style="height:100%;" > 
 		<div data-dojo-type="dijit/layout/BorderContainer" title="Gerrymandering">
 			<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:40%">
@@ -70,40 +82,8 @@
 		</div>
 	</div>
 	
-	<script>
-		var demo;
-		require(["dojo/_base/declare", "dojo/dom", "dojo/dom-style","dojo/_base/fx"],
-    		function(declare, dom, domStyle, fx){
-    			var x = dom.byId("loadingOverlay");
-    			console.log(x);
-    			var Demo = declare(null, {
-    				overlayNode: null,
-    				constructor: function(){
-    				//save a reference to the overlay
-    					console.log("This worked");
-    					this.overlayNode = dom.byId("loadingOverlay");
-    					console.log(this.overlayNode);
-    				},
-    				endLoading: function(){
-    				// fade the overlay gracefully
-    					fx.fadeOut({
-    						node: this.overlayNode,
-    						onEnd: function(node){
-    						domStyle.set(node, 'display', 'none');
-    						}
-    					}).play();
-    				}
-    			});
-    			demo = new Demo();
-    		// layout is ready, hide the loading overlay
-    		});
-		
-    		require(["dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer", "dijit/layout/TabContainer", 
-    		"dijit/layout/AccordionContainer"], function(parser){
-    		parser.parse();
-    		demo.endLoading();
-    		});
-	</script>
+
+	
 	<script>
 	var statesData = {"type":"FeatureCollection","features":[
 		{"type":"Feature","id":"01","properties":{"name":"Alabama","density":94.65},"geometry":{"type":"Polygon","coordinates":[[[-87.359296,35.00118],[-85.606675,34.984749],[-85.431413,34.124869],[-85.184951,32.859696],[-85.069935,32.580372],[-84.960397,32.421541],[-85.004212,32.322956],[-84.889196,32.262709],[-85.058981,32.13674],[-85.053504,32.01077],[-85.141136,31.840985],[-85.042551,31.539753],[-85.113751,31.27686],[-85.004212,31.003013],[-85.497137,30.997536],[-87.600282,30.997536],[-87.633143,30.86609],[-87.408589,30.674397],[-87.446927,30.510088],[-87.37025,30.427934],[-87.518128,30.280057],[-87.655051,30.247195],[-87.90699,30.411504],[-87.934375,30.657966],[-88.011052,30.685351],[-88.10416,30.499135],[-88.137022,30.318396],[-88.394438,30.367688],[-88.471115,31.895754],[-88.241084,33.796253],[-88.098683,34.891641],[-88.202745,34.995703],[-87.359296,35.00118]]]}},
