@@ -13,9 +13,17 @@
     	
     	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 
-	<link rel="stylesheet" href="./dijit/themes/nihilo/nihilo.css">
 
+	<!-- Style sheets -->
+	<link rel="stylesheet" href="./dijit/themes/claro/claro.css"/>
+	<link rel="stylesheet" href="./dijit/themes/nihilo/nihilo.css"/>
+	<link rel="stylesheet" href="./dijit/themes/soria/soria.css"/>
+	<link rel="stylesheet" href="./dijit/themes/tundra/tundra.css"/>
+	<link rel="stylesheet" href="./javascript/nihilo_override.css"/>
 	<link rel="stylesheet" type="text/css" href="./css/style.css"/>
+	
+	
+	
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <!-- Load Esri Leaflet from source-->
     <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.3/esri-leaflet.js"></script>
@@ -57,31 +65,72 @@
     	
 	</script>
 </head>
-<body class ="claro tundra nihilo soria">
+<body id="bod" class ="claro">
 
 	<div id="loadingOverlay" class="loadingMessage pageOverlay">Loading</div>
-	<div data-dojo-type="dijit/layout/TabContainer" style="height:100%;" > 
-		<div data-dojo-type="dijit/layout/BorderContainer" title="Gerrymandering">
-			<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:40%">
-				<div data-dojo-type="dijit/layout/ContentPane" title="Data #1">Data could go here</div>
-		        	<div data-dojo-type="dijit/layout/ContentPane" title="Data #2">More data here</div>
-		        	<div data-dojo-type="dijit/layout/ContentPane" title="Data #3">Even more data</div>
-			</div>
-			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'" id="gerrymanderingMapPane">
-				<div id="map"></div>
-			</div>
+	
+	
+	<div data-dojo-type="dijit/layout/BorderContainer" style="height:100%; width:100%;">
+		<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'" style="height:5%;">
+		test
 		</div>
-		<div data-dojo-type="dijit/layout/BorderContainer" title="Redistricting">
-			<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:40%">
-				<div data-dojo-type="dijit/layout/ContentPane" title="Data #1">Data could go here</div>
-		        	<div data-dojo-type="dijit/layout/ContentPane" title="Data #2">More data here</div>
-		        	<div data-dojo-type="dijit/layout/ContentPane" title="Data #3">Even more data</div>
-		    </div>
-			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'" id="redistrictingMapPane">
+	
+		<div data-dojo-type="dijit/layout/TabContainer" data-dojo-props="region: 'center'" > 
+			<div data-dojo-type="dijit/layout/BorderContainer" title="Gerrymandering">
+				<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:40%">
+					<div data-dojo-type="dijit/layout/ContentPane" title="Data #1">
+<button id="claroBtn">Claro</button><br/>
+				       	<button id="nihiloBtn">Nihilo</button><br/>
+				       	<button id="soriaBtn">Soria</button><br/>
+				       	<button id="tundraBtn">Tundra</button><br/>
+				       	<script>
+				       		require(["dojo/dom", "dojo/on", "dojo/dom-class"],
+				       				function(dom, on, domClass){
+				       			on(dom.byId("claroBtn"), "click", function(){
+				       				domClass.remove("bod");
+				       				domClass.add("bod", "claro");
+				       				
+				       			});
+				       			on(dom.byId("nihiloBtn"), "click", function(){
+				       				domClass.remove("bod");
+				       				domClass.add("bod", "nihilo");
+				       				
+				       			});
+				       			on(dom.byId("soriaBtn"), "click", function(){
+				       				domClass.remove("bod");
+				       				domClass.add("bod", "soria");
+				       				
+				       			});
+				       			on(dom.byId("tundraBtn"), "click", function(){
+				       				domClass.remove("bod");
+				       				domClass.add("bod", "tundra");
+				       				
+				       			});
+				       			
+				       		});
+				       	
+				       	</script>
+					</div>
+			        <div data-dojo-type="dijit/layout/ContentPane" title="Data #2">More data here</div>
+			       	<div data-dojo-type="dijit/layout/ContentPane" title="Data #3">
+				       	
+			       	</div>
+				</div>
+				<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'" id="gerrymanderingMapPane">
+					<div id="map"></div>
+				</div>
+			</div>
+			<div data-dojo-type="dijit/layout/BorderContainer" title="Redistricting">
+				<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:40%">
+					<div data-dojo-type="dijit/layout/ContentPane" title="Data #1">Data could go here</div>
+			        <div data-dojo-type="dijit/layout/ContentPane" title="Data #2">More data here</div>
+			        <div data-dojo-type="dijit/layout/ContentPane" title="Data #3"></div>
+			    </div>
+				<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'" id="redistrictingMapPane">
+				</div>
 			</div>
 		</div>
 	</div>
-	
 
 	
 	<script>
