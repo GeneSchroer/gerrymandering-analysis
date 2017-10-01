@@ -15,11 +15,8 @@
 
 
 	<!-- Style sheets -->
-	<link rel="stylesheet" href="./dijit/themes/claro/claro.css"/>
 	<link rel="stylesheet" href="./dijit/themes/nihilo/nihilo.css"/>
-	<link rel="stylesheet" href="./dijit/themes/soria/soria.css"/>
-	<link rel="stylesheet" href="./dijit/themes/tundra/tundra.css"/>
-	<link rel="stylesheet" href="./javascript/nihilo_override.css"/>
+	<link rel="stylesheet" href="./css/nihilo_override.css"/>
 	<link rel="stylesheet" type="text/css" href="./css/style.css"/>
 	
 	
@@ -42,8 +39,8 @@
         
         #map2{
    			position: absolute;
-        		height: 500px;
-        		width: 500px;
+        		height: 100%;
+        		width: 100%;
         }
         
         
@@ -57,7 +54,7 @@
     <script>
 		
     		require(["javascript/LoadingScreen","dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer", "dijit/layout/TabContainer", 
-    		"dijit/layout/AccordionContainer"], function(LoadingScreen, parser){
+    		"dijit/layout/AccordionContainer", "dijit/form/Button", "dijit/form/Select"], function(LoadingScreen, parser){
     			var loadingScreen = new LoadingScreen("loadingOverlay");	
     			parser.parse();
     			loadingScreen.endLoading();
@@ -65,51 +62,27 @@
     	
 	</script>
 </head>
-<body id="bod" class ="claro">
+<body class ="nihilo">
 
 	<div id="loadingOverlay" class="loadingMessage pageOverlay">Loading</div>
 	
 	
 	<div data-dojo-type="dijit/layout/BorderContainer" style="height:100%; width:100%;">
 		<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'" style="height:5%;">
-		test
+		
 		</div>
 	
 		<div data-dojo-type="dijit/layout/TabContainer" data-dojo-props="region: 'center'" > 
 			<div data-dojo-type="dijit/layout/BorderContainer" title="Gerrymandering">
 				<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:40%">
-					<div data-dojo-type="dijit/layout/ContentPane" title="Data #1">
-<button id="claroBtn">Claro</button><br/>
-				       	<button id="nihiloBtn">Nihilo</button><br/>
-				       	<button id="soriaBtn">Soria</button><br/>
-				       	<button id="tundraBtn">Tundra</button><br/>
-				       	<script>
-				       		require(["dojo/dom", "dojo/on", "dojo/dom-class"],
-				       				function(dom, on, domClass){
-				       			on(dom.byId("claroBtn"), "click", function(){
-				       				domClass.remove("bod");
-				       				domClass.add("bod", "claro");
-				       				
-				       			});
-				       			on(dom.byId("nihiloBtn"), "click", function(){
-				       				domClass.remove("bod");
-				       				domClass.add("bod", "nihilo");
-				       				
-				       			});
-				       			on(dom.byId("soriaBtn"), "click", function(){
-				       				domClass.remove("bod");
-				       				domClass.add("bod", "soria");
-				       				
-				       			});
-				       			on(dom.byId("tundraBtn"), "click", function(){
-				       				domClass.remove("bod");
-				       				domClass.add("bod", "tundra");
-				       				
-				       			});
-				       			
-				       		});
-				       	
-				       	</script>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Superdistrict Creator">
+						<div>Choose a method of redistricting</div>
+						<select name="redistrctingSelect" data-dojo-type="dijit/form/Select">
+							<option value="Existing">Create from existing districts</option>
+						</select>
+						<button data-dojo-type="dijit/form/Button">Create</button>
+						<button data-dojo-type="dijit/form/Button">Edit</button>
+						<button data-dojo-type="dijit/form/Button">Delete</button>
 					</div>
 			        <div data-dojo-type="dijit/layout/ContentPane" title="Data #2">More data here</div>
 			       	<div data-dojo-type="dijit/layout/ContentPane" title="Data #3">
@@ -127,6 +100,7 @@
 			        <div data-dojo-type="dijit/layout/ContentPane" title="Data #3"></div>
 			    </div>
 				<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'" id="redistrictingMapPane">
+					<div id="map2"></div>
 				</div>
 			</div>
 		</div>
@@ -190,10 +164,13 @@
 		]};
 	
 		var map = L.map('map').setView([38, -88], 4);
-		L.esri.basemapLayer('Topographic').addTo(map);
-
-		L.geoJson(statesData).addTo(map);
+		var map2 = L.map('map2').setView([38, -88], 4);
 		
+		
+		L.esri.basemapLayer('Topographic').addTo(map);
+		L.esri.basemapLayer('Topographic').addTo(map2);
+		L.geoJson(statesData).addTo(map);
+		L.geoJson(statesData).addTo(map2);
 		function setColor(d) {
 		    return d > 1000 ? '#33241C' :
 		           d > 500  ? '#814B19' :
@@ -216,7 +193,7 @@
 		}
 
 		L.geoJson(statesData, {style: style}).addTo(map);
-		
+		L.geoJson(statesData, {style: style}).addTo(map2);
 		function highlightFeature(e) {
 		    var layer = e.target;
 
@@ -253,6 +230,10 @@
 		    onEachFeature: onEachFeature
 		}).addTo(map);
 		
+		geojson2 = L.geoJson(statesData, {
+		    style: style,
+		    onEachFeature: onEachFeature
+		}).addTo(map2);
 	</script>
 </body>
 </html>
