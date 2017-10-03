@@ -4,29 +4,28 @@
 	<!-- Project by Lifeng Lin, Sung Jae Min, Xianwen Peng, and Gene Schroer -->
     <!-- Web GUI by Sung Jae Min and Gene Schroer -->
     
-    <title>Gerrymandering Analysis Program </title>
-    	<meta charset="UTF-8">
-    	
-    	
-    	
-    	
-    	
-    	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-
-
-	<!-- Style sheets -->
+    <title>Gerrymandering Analysis Main Page </title>
+    <meta charset="UTF-8">
+    
+    
+    <!-- Leaflet style sheets and scripts -->	
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+	<!-- Load Esri Leaflet from source-->
+	<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.3/esri-leaflet.js"></script>
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	
+	
+	<!-- Dojo style sheets and scripts-->
 	<link rel="stylesheet" href="./dijit/themes/nihilo/nihilo.css"/>
+	<script src="dojo/dojo.js" data-dojo-config="async:true" ></script>
+	
+	<!-- Local style sheets for page -->
 	<link rel="stylesheet" href="./css/nihilo_override.css"/>
 	<link rel="stylesheet" type="text/css" href="./css/style.css"/>
 	
-	
-	
-	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    <!-- Load Esri Leaflet from source-->
-    <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.3/esri-leaflet.js"></script>
     
-    <!--load dojo-->
-	<script src="dojo/dojo.js" data-dojo-config="async:true" ></script>
+    
+    
 
     	<style>
        
@@ -76,13 +75,7 @@
 			<div data-dojo-type="dijit/layout/BorderContainer" title="Gerrymandering">
 				<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:40%">
 					<div data-dojo-type="dijit/layout/ContentPane" title="Superdistrict Creator">
-						<div>Choose a method of redistricting</div>
-						<select name="redistrctingSelect" data-dojo-type="dijit/form/Select">
-							<option value="Existing">Create from existing districts</option>
-						</select>
-						<button data-dojo-type="dijit/form/Button">Create</button>
-						<button data-dojo-type="dijit/form/Button">Edit</button>
-						<button data-dojo-type="dijit/form/Button">Delete</button>
+
 					</div>
 			        <div data-dojo-type="dijit/layout/ContentPane" title="Data #2">More data here</div>
 			       	<div data-dojo-type="dijit/layout/ContentPane" title="Data #3">
@@ -90,12 +83,24 @@
 			       	</div>
 				</div>
 				<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'" id="gerrymanderingMapPane">
+					<div data-dojo-type="dijit/form/Select">
+						
+					</div>
 					<div id="map"></div>
 				</div>
 			</div>
 			<div data-dojo-type="dijit/layout/BorderContainer" title="Redistricting">
 				<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true" style="width:40%">
-					<div data-dojo-type="dijit/layout/ContentPane" title="Data #1">Data could go here</div>
+					<div data-dojo-type="dijit/layout/ContentPane" title="Data #1">
+					<div>Choose a method of redistricting</div>
+						<select name="redistrctingSelect" data-dojo-type="dijit/form/Select">
+							<option value="Existing">Create from existing districts</option>
+						</select>
+						<button data-dojo-type="dijit/form/Button">Create</button>
+						<button data-dojo-type="dijit/form/Button">Edit</button>
+						<button data-dojo-type="dijit/form/Button">Delete</button>
+					
+					</div>
 			        <div data-dojo-type="dijit/layout/ContentPane" title="Data #2">More data here</div>
 			        <div data-dojo-type="dijit/layout/ContentPane" title="Data #3"></div>
 			    </div>
